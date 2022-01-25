@@ -49,14 +49,14 @@ def login_page():
     """)
 
 
-def secret_page(username=None, password=None):
+def secret_page(username=None, password=None, from_cookie=False):
     """
     Returns the HTML for the page visited after the user has logged-in.
     """
     if username is None or password is None:
         raise ValueError("You need to pass both username and password!")
 
-    return _wrapper("""
+    html = _wrapper("""
     <h1> Welcome, {username}! </h1>
 
     <p> <small> Pst! I know your password is
@@ -65,6 +65,9 @@ def secret_page(username=None, password=None):
     </p>
     """.format(username=escape(username.capitalize()),
                password=escape(password)))
+    if from_cookie:
+        html += "<p>Secret cookie message</p>"
+    return html
 
 
 def after_login_incorrect():
